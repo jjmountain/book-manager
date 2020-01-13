@@ -5,7 +5,8 @@ class Api::V1::UsersController < ApplicationController
     render json: {
       id: @user.id,
       name: @user.full_name,
-      balance: @user.balance
+      balance: @user.balance,
+      loans: @user.loans
     }
   end
 

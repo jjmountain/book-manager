@@ -4,7 +4,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [ :show, :create ]
       resources :books, only: [ :show ]
-      resources :loans, only: [ :show, :create, :update ]
+      resources :loans, only: [ :show, :create ]
+      patch 'return', to: 'loans#return'
+      post 'income', to: 'books#income'
     end
   end
 end

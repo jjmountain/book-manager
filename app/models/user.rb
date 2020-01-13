@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :loans
   validates :acc_number, uniqueness: true
   before_create :generate_acc_number
+  
 
   def full_name
     first_name + ' ' + last_name

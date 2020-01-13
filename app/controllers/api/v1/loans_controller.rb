@@ -7,31 +7,23 @@ class Api::V1::LoansController < ApplicationController
       book: @loan.book,
       user: @loan.user,
       due_date: @loan.due_date,
-      returned: @loan.returned?,
-      return_date: @loan.date_returned
-    }
+      returned: @loan.returned  }
   end
 
   def create
-    ## check to see if there are books available to loan and the user has enough money
     @book = Book.find(loan_params[:book_id])
     @user = User.find(loan_params[:user_id])
-    @loan = Loan.new(loan_params)
-
-    if @book.book_available?
-      
-      if @loan.save
-        render json: { status: 'SUCCESS', message: 'created a loan', data: [@loan, @book] }
-      else
-        render json: { status: 'ERROR', message: "loan couldn't be created", data: @loan.errors }
-      end
+    @loan = Loan.new(loan_params)      
+    if @loan.save
+      render json: { status: 'SUCCESS', message: 'created a loan', data: { loan: @loan, user: @user, book: @book } }
     else
       render json: { status: 'ERROR', message: "loan couldn't be created", data: @loan.errors }
     end
   end
 
-  def update
-    if @loan.update(return_params)
+  def return
+    @loan = Loan.where(book_id: loan_params[:book_id], user_id: loan_params[:user_id]).last
+    if @loan.update(loan_params)
       render json: { status: 'SUCCESS', message: "Book was returned", data: @loan }
     else
       render json: { status: 'ERROR', message: "Book couldn't be returned", data: @loan.errors }
@@ -46,10 +38,6 @@ class Api::V1::LoansController < ApplicationController
 
   def loan_params 
     params.require(:loan).permit(:user_id, :book_id)
-  end
-
-  def return_params
-    params.require(:loan).permit(:user_id, :book_id, :date_returned)
   end
 
   def render_error
