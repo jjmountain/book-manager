@@ -12,6 +12,7 @@ class Api::V1::BooksController < ApplicationController
     times_rented = @book.times_rented(start_date, end_date)
     income = @book.income(start_date, end_date)
       render json: {
+        id: @book.id,
         title: @book.title,
         author: @book.author,
         start_date: start_date,

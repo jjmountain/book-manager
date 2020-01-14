@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :loans
   validates :acc_number, uniqueness: true
+  validates :balance, presence: true
   before_create :generate_acc_number
   
 

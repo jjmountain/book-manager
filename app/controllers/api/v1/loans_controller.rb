@@ -1,6 +1,11 @@
 class Api::V1::LoansController < ApplicationController 
   before_action :set_loan, only: [ :show, :update ]
 
+  def index
+    @loans = Loan.all
+    render json: @loans
+  end
+
   def show
     render json: @loan
   end

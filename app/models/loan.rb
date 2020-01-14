@@ -13,6 +13,7 @@ class Loan < ApplicationRecord
   validate :loan_is_not_already_returned, on: :update
 
 
+
   # validate :book_being_returned_is_checked_out_by_user, on: :update
   
   # validations on creating loan
