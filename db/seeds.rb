@@ -32,7 +32,7 @@ puts 'Creating 10 books'
   Book.create(
     title: Faker::Book.title,
     author: Faker::Book.author,
-    quantity: rand(11),
+    quantity_remaining: rand(11),
     rental_fee: 3.00
   )
 end
