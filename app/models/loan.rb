@@ -6,7 +6,6 @@ class Loan < ApplicationRecord
   before_update :increment_book_quantity, :deduct_user_balance, :return!
   validates :book_id, presence: true
   validates :user_id, presence: true
-
   validate :book_is_available, on: :create
   validate :user_has_enough_credit, on: :create
   validate :user_is_not_already_borrowing_book, on: :create
@@ -19,7 +18,7 @@ class Loan < ApplicationRecord
   # validations on creating loan
 
   def book_is_available
-    if Book.find(book_id).quantity == 0 
+    if Book.find(book_id).quantity_remaining == 0 
       errors.add(:book_id, "No more copies of that book are available")
     end
   end
@@ -54,14 +53,14 @@ class Loan < ApplicationRecord
 
   def deduct_book_quantity
     book_to_update = Book.find(book_id)
-    book_to_update.update(quantity: book_to_update.quantity - 1)
+    book_to_update.update(quantity_remaining: book_to_update.quantity_remaining - 1)
   end
 
   # callbacks on update (return)
 
   def increment_book_quantity
     book_to_update = Book.find(book_id)
-    book_to_update.update(quantity: book_to_update.quantity + 1)
+    book_to_update.update(quantity_remaining: book_to_update.quantity_remaining + 1)
   end
 
   def return!

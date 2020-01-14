@@ -5,7 +5,11 @@ class User < ApplicationRecord
   
 
   def full_name
-    first_name + ' ' + last_name
+    if first_name && last_name
+      first_name + ' ' + last_name
+    else
+      ''
+    end
   end
 
   def generate_acc_number

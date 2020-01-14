@@ -1,13 +1,12 @@
 class Api::V1::UsersController < ApplicationController 
   before_action :set_user, only: [ :show ]
 
+  def index
+    @users = User.all
+  end
+
   def show
-    render json: {
-      id: @user.id,
-      name: @user.full_name,
-      balance: @user.balance,
-      loans: @user.loans
-    }
+    render json: @user
   end
 
   def create
@@ -26,7 +25,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def user_params 
-    params.require(:user).permit(:balance)
+    params.require(:user).permit(:balance, :first_name, :last_name)
   end
 
   def render_error

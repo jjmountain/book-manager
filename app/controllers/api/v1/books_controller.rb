@@ -2,12 +2,7 @@ class Api::V1::BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    render json: {
-      title: @book.title,
-      author: @book.author,
-      rental_fee: @book.rental_fee,
-      quantity: @book.quantity
-    }
+    render json: @book
   end
 
   def income
