@@ -2,7 +2,7 @@
 
 ### RESTful API for a library service completed as a coding test.
 
-[This](https://ekohe-book-manager.herokuapp.com/api/v1/) modest API allows you to:
+This modest API [endpoint](https://ekohe-book-manager.herokuapp.com/api/v1/) allows you to:
 
 - Create users with a starting balance and optional name attributes
 - Create loans on books for a specified user and book, if there is enough balance in your user's account
